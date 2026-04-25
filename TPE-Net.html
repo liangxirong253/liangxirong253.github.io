@@ -235,7 +235,6 @@
             <img src="TPE_HTML/Module1.png" alt="TPE-Net overall architecture" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module1.png is in the folder';">
             <figcaption><strong>Fig. 1. Overview of the TPE-Net workflow.</strong> TPE-Net is a two-stage training network that leverages a terrestrial image-pretrained codebook as a visual prior and progressively optimizes the network with contrastive constraints. In the first stage, we preliminarily optimize the encoder E, decoder G and the code prediction generator G_θ by establishing contrastive constraints between degraded features and clear features within the prior codebook-based quantized feature space. In the second stage, we further strengthen the separation of degradation-related latent features from current predictions to train the confidence predictor G_φ, enabling it to discern which parts of the sequence S should be discarded or retained. During inference, an iterative mechanism is introduced to progressively correct local regions with low confidence while preserving reliable restoration regions, thereby improving spatial coherence and visual quality.</figcaption>
         </div>
-        <p style="text-align: center; font-size:0.85rem; color:#5f7d9c;">Architecture contains encoder, code predictor, confidence predictor and learnable decoder.</p>
     </section>
 
     <!-- Fig. 2 (原论文图3) 添加 narrow 类让其图片变窄 -->
