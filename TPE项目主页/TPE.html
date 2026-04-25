@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TPE-Net: Weakly Supervised Underwater Image Enhancement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            color: #1e2a3e;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 2rem 2rem 2rem 2rem;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        .authors {
+            font-size: 1.1rem;
+            margin: 0.75rem 0 0.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .authors a {
+            color: #2c6e9e;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #8fc5e8;
+        }
+        .authors a:hover {
+            color: #0a4b6e;
+            border-bottom: 1px solid #0a4b6e;
+        }
+        .affiliations {
+            font-size: 0.9rem;
+            color: #4a627a;
+            margin: 0.5rem 0 1rem 0;
+            line-height: 1.4;
+        }
+        .links {
+            margin: 1.2rem 0 0.5rem;
+        }
+        .links a {
+            display: inline-block;
+            margin: 0.4rem 0.6rem;
+            padding: 0.5rem 1.5rem;
+            background: #1f6392;
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .links a:hover {
+            background: #0f4b6e;
+            transform: translateY(-2px);
+        }
+        .section {
+            margin: 2.8rem 0;
+        }
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #1f3a5f;
+            border-left: 5px solid #2c7cb6;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .abstract {
+            background: #f8fafd;
+            padding: 1.2rem 1.8rem;
+            border-radius: 18px;
+            border: 1px solid #e2edf7;
+            font-size: 1rem;
+            text-align: justify;
+            color: #1e2f41;
+        }
+        .abstract p {
+            margin-bottom: 0.8rem;
+        }
+        .highlights-list {
+            background: #f0f6fa;
+            border-left: 4px solid #2c7cb6;
+            padding: 1.2rem 1.8rem;
+            border-radius: 18px;
+            list-style-type: none;
+        }
+        .highlights-list li {
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            position: relative;
+            font-weight: 450;
+            line-height: 1.45;
+        }
+        .highlights-list li strong {
+            color: #1a5d8f;
+        }
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e2edf2;
+        }
+        /* 新增：仅让 Confidence Predictor Training 的图片变窄 */
+        .figure.narrow img {
+            width: 65%;
+            max-width: 65%;
+            display: inline-block;
+        }
+        figcaption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #2c6280;
+            margin-top: 0.6rem;
+            font-weight: 500;
+        }
+        .citation {
+            background: #f9fbfe;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #e9edf2;
+        }
+        .citation pre {
+            background: #eef3fc;
+            padding: 1rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #1e4663;
+            border: 1px solid #d4e2f0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1rem;
+            color: #6c86a3;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9ecef;
+        }
+        .contact-line {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #2b6a9c;
+        }
+        .vis-compare-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Weakly Supervised Underwater Image Enhancement Guided by Terrestrial Codebook Priors with Contrast Constraints</h1>
+        <div class="authors">
+            Qi Qi<sup>1</sup>, Xirong Liang<sup>2</sup>, Weizheng Li<sup>3</sup>, Kunqian Li<sup>*</sup><sup>4</sup>
+        </div>
+        <div class="affiliations">
+            <sup>1,2,3</sup> Qingdao University of Technology, China&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <sup>4</sup> Ocean University of China, China<br>
+            <span style="font-size:0.85rem;">Corresponding author: Kunqian Li</span>
+        </div>
+        <div class="links">
+            <a href="#" target="_blank">📄 Paper</a>
+            <a href="https://github.com/liangxirong253/TPE_Net_Simple" target="_blank">💻 Code</a>
+        </div>
+    </header>
+
+    <!-- 摘要区 -->
+    <section class="section">
+        <h2>📖 Abstract</h2>
+        <div class="abstract">
+            <p>Underwater images are essential for marine applications yet suffer from severe degradation due to selective light absorption and scattering. The scarcity of high‑quality paired training data remains a fundamental bottleneck, as synthetic data fail to capture real‑world complexity, while real‑world datasets rely on algorithm‑generated references with inherent color deviation or detail loss. To address these challenges, we propose <strong>TPE‑Net</strong>, a weakly supervised underwater image enhancement framework guided by a terrestrial codebook prior. Unlike existing methods that directly use terrestrial images as auxiliary supervision, we leverage a pretrained codebook rich in terrestrial color features as a compact, queryable discrete representation, replacing direct supervision from imperfect references with a stable prior. We further design a two‑stage framework that combines global degradation suppression with spatially adaptive local refinement through a carefully designed contrastive constraint strategy. Extensive experiments on multiple underwater benchmarks demonstrate that our method consistently achieves competitive performance in both quantitative metrics and perceptual quality, validating its effectiveness and robustness across diverse degradation scenarios.</p>
+            <p><strong>Index Terms</strong> — Underwater image enhancement, Terrestrial images, VQ‑GAN, contrastive learning.</p>
+        </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="section">
+        <h2>✨ Highlights</h2>
+        <ul class="highlights-list">
+            <li><strong>1) Terrestrial codebook prior paradigm</strong> — We introduce a new paradigm that leverages a terrestrial‑image‑pretrained codebook as a visual prior, replacing direct pixel‑level supervision from imperfect reference images with a stable, queryable discrete representation to mitigate the adverse impact of reference image quality on model training.</li>
+            <li><strong>2) Two‑stage weakly supervised framework</strong> — We propose a two‑stage framework that synergizes global degradation suppression via contrastive learning with spatially adaptive local refinement guided by a confidence predictor and a distance‑based constraint.</li>
+            <li><strong>3) Superior performance & robustness</strong> — Extensive experiments on multiple underwater benchmarks (UIEB, SUIM‑E, Challenging C60, USOD, EUVP, RUIE etc.) demonstrate that our method consistently delivers superior performance in both quantitative metrics and perceptual quality, underscoring its effectiveness and robustness across diverse degradation scenarios.</li>
+        </ul>
+    </section>
+
+    <!-- Fig. 1 (原论文图2) -->
+    <section class="section">
+        <h2>🧩 Method Overview</h2>
+        <div class="figure">
+            <img src="Module1.png" alt="TPE-Net overall architecture" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module1.png is in the folder';">
+            <figcaption><strong>Fig. 1. Overview of the TPE-Net workflow.</strong> TPE-Net is a two-stage training network that leverages a terrestrial image-pretrained codebook as a visual prior and progressively optimizes the network with contrastive constraints. In the first stage, we preliminarily optimize the encoder E, decoder G and the code prediction generator G_θ by establishing contrastive constraints between degraded features and clear features within the prior codebook-based quantized feature space. In the second stage, we further strengthen the separation of degradation-related latent features from current predictions to train the confidence predictor G_φ, enabling it to discern which parts of the sequence S should be discarded or retained. During inference, an iterative mechanism is introduced to progressively correct local regions with low confidence while preserving reliable restoration regions, thereby improving spatial coherence and visual quality.</figcaption>
+        </div>
+        <p style="text-align: center; font-size:0.85rem; color:#5f7d9c;">Architecture contains encoder, code predictor, confidence predictor and learnable decoder.</p>
+    </section>
+
+    <!-- Fig. 2 (原论文图3) 添加 narrow 类让其图片变窄 -->
+    <section class="section">
+        <h2>🎯 Confidence Predictor Training</h2>
+        <div class="figure narrow">
+            <img src="Module2.png" alt="Confidence predictor supervision" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module2.png is in the folder';">
+            <figcaption><strong>Fig. 2. Confidence predictor supervision.</strong> The sequence S predicted by the code predictor is fed into the confidence predictor and supervised from two perspectives: (i) a cross-entropy loss computed against the ground-truth sequence of the reference image; and (ii) a discrepancy-guided cross-entropy loss is introduced to characterize the divergence between the predicted quantized features Z_q^p and their counterparts Z_q^l obtained from degraded inputs.</figcaption>
+        </div>
+    </section>
+
+    <!-- Visual Comparisons 合并章节：Fig.3, Fig.4, Fig.5 -->
+    <section class="section">
+        <h2>🖼️ Visual Comparisons</h2>
+        <div class="vis-compare-group">
+            <!-- Fig. 3 (原论文图4) -->
+            <div class="figure">
+                <img src="results1.png" alt="Comparison on T200 / UIEB / SUIM-E" onerror="this.onerror=null; this.alt='Image results1.png not found';">
+                <figcaption><strong>Fig. 3. Visual comparisons on reference benchmarks UIEB [8], SUIM-E [4].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25], our method and Reference.</figcaption>
+            </div>
+            <!-- Fig. 4 (原论文图5) -->
+            <div class="figure">
+                <img src="results2.png" alt="Comparison on UIEB Challenging / USOD" onerror="this.onerror=null; this.alt='Image results2.png not found';">
+                <figcaption><strong>Fig. 4. Visual comparisons on non-reference benchmarks UIEB Challenging [8], USOD [37].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25] and our method.</figcaption>
+            </div>
+            <!-- Fig. 5 (原论文图6) -->
+            <div class="figure">
+                <img src="results3.png" alt="Comparison on EUVP / RUIE" onerror="this.onerror=null; this.alt='Image results3.png not found';">
+                <figcaption><strong>Fig. 5. Visual comparisons on non-reference benchmarks EUVP [36], RUIE [38].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35] and our method.</figcaption>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation -->
+    <section class="section">
+        <h2>📄 Citation</h2>
+        <div class="citation">
+            <p>If you find TPE‑Net useful for your research, please consider citing our paper:</p>
+            <pre>
+@article{qi2025tpenet,
+  title     = {Weakly Supervised Underwater Image Enhancement Guided by Terrestrial Codebook Priors with Contrast Constraints},
+  author    = {Qi Qi and Xirong Liang and Weizheng Li and Kunqian Li},
+  journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence (submitted) / arXiv preprint},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/XXXX.XXXX},
+  code      = {https://github.com/liangxirong253/TPE_Net_Simple}
+}
+            </pre>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 TPE‑Net Authors | Qingdao University of Technology & Ocean University of China</p>
+        <div class="contact-line">
+            📧 qiqi@qut.edu.cn / liangxirong@stu.qut.edu.cn / liweizheng@stu.qut.edu.cn &nbsp;|&nbsp; likunqian@ouc.edu.cn
+        </div>
+        <p style="margin-top: 0.3rem;">Implementation based on terrestrial VQ‑GAN prior + weak supervision + contrastive constraints.</p>
+    </footer>
+</div>
+</body>
+</html>
