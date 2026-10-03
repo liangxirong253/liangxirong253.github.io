@@ -253,33 +253,51 @@
         </div>
     </section>
 
-    <!-- Fig. 2 (原论文图3) 添加 narrow 类让其图片变窄 -->
+    <!-- Fig. 2 (论文图3) -->
+    <section class="section">
+        <h2>🧩 Codebook-Constrained Compositional Supervision</h2>
+        <div class="figure">
+            <img src="TPE_HTML/Module4.png" alt="Codebook-constrained compositional supervision" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module4.png is in the folder';">
+            <figcaption><strong>Fig. 2. Codebook-constrained compositional supervision.</strong> Reference-derived positive guidance, terrestrial codebook prior guidance, and degradation-oriented negative guidance are coordinated within a shared discrete representation space to progressively support global enhancement, regional reliability estimation, and local refinement.</figcaption>
+        </div>
+    </section>
+
+    <!-- Fig. 3 (论文图4) -->
+    <section class="section">
+        <h2>🌐 Stage I: Global Enhancement</h2>
+        <div class="figure">
+            <img src="TPE_HTML/Module3.png" alt="Stage I global enhancement with masked feature mixing and codebook-constrained contrastive restoration" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module3.png is in the folder';">
+            <figcaption><strong>Fig. 3. Stage I global enhancement.</strong> (a) Masked feature mixing combines degraded latent features with reference-derived quantized tokens for code prediction. (b) The shared terrestrial codebook provides reference-associated positive and degradation-associated negative representations to constrain latent restoration, while codebook-derived decoder features are fused with input-dependent encoder features for adaptive reconstruction.</figcaption>
+        </div>
+    </section>
+
+    <!-- Fig. 4 (原论文图5) 添加 narrow 类让其图片变窄 -->
     <section class="section">
         <h2>🎯 Confidence Predictor Training</h2>
         <div class="figure narrow">
             <img src="TPE_HTML/Module2.png" alt="Confidence predictor supervision" onerror="this.onerror=null; this.alt='Image loading failed, ensure Module2.png is in the folder';">
-            <figcaption><strong>Fig. 2. Confidence predictor supervision.</strong> The sequence S predicted by the code predictor is fed into the confidence predictor and supervised from two perspectives: (i) a cross-entropy loss computed against the ground-truth sequence of the reference image; and (ii) a discrepancy-guided cross-entropy loss is introduced to characterize the divergence between the predicted quantized features \( Z_q^p \) and their counterparts \( Z_q^l \) obtained from degraded inputs.</figcaption>
+            <figcaption><strong>Fig. 4. Confidence predictor supervision.</strong> The sequence S predicted by the code predictor is fed into the confidence predictor and supervised from two perspectives: (i) a cross-entropy loss computed against the ground-truth sequence of the reference image; and (ii) a discrepancy-guided cross-entropy loss is introduced to characterize the divergence between the predicted quantized features \( Z_q^p \) and their counterparts \( Z_q^l \) obtained from degraded inputs.</figcaption>
         </div>
     </section>
 
-    <!-- Visual Comparisons 合并章节：Fig.3, Fig.4, Fig.5 -->
+    <!-- Visual Comparisons 合并章节：Fig.5, Fig.6, Fig.7 -->
     <section class="section">
         <h2>🖼️ Visual Comparisons</h2>
         <div class="vis-compare-group">
-            <!-- Fig. 3 (原论文图4) -->
-            <div class="figure">
-                <img src="TPE_HTML/results1.png" alt="Comparison on T200 / UIEB / SUIM-E" onerror="this.onerror=null; this.alt='Image results1.png not found';">
-                <figcaption><strong>Fig. 3. Visual comparisons on reference benchmarks UIEB [8], SUIM-E [4].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25], our method and Reference.</figcaption>
-            </div>
-            <!-- Fig. 4 (原论文图5) -->
-            <div class="figure">
-                <img src="TPE_HTML/results2.png" alt="Comparison on UIEB Challenging / USOD" onerror="this.onerror=null; this.alt='Image results2.png not found';">
-                <figcaption><strong>Fig. 4. Visual comparisons on non-reference benchmarks UIEB Challenging [8], USOD [37].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25] and our method.</figcaption>
-            </div>
             <!-- Fig. 5 (原论文图6) -->
             <div class="figure">
+                <img src="TPE_HTML/results1.png" alt="Comparison on T200 / UIEB / SUIM-E" onerror="this.onerror=null; this.alt='Image results1.png not found';">
+                <figcaption><strong>Fig. 5. Visual comparisons on reference benchmarks UIEB [8], SUIM-E [4].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25], our method and Reference.</figcaption>
+            </div>
+            <!-- Fig. 6 (原论文图7) -->
+            <div class="figure">
+                <img src="TPE_HTML/results2.png" alt="Comparison on UIEB Challenging / USOD" onerror="this.onerror=null; this.alt='Image results2.png not found';">
+                <figcaption><strong>Fig. 6. Visual comparisons on non-reference benchmarks UIEB Challenging [8], USOD [37].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35], CodeUnet [25] and our method.</figcaption>
+            </div>
+            <!-- Fig. 7 (原论文图8) -->
+            <div class="figure">
                 <img src="TPE_HTML/results3.png" alt="Comparison on EUVP / RUIE" onerror="this.onerror=null; this.alt='Image results3.png not found';">
-                <figcaption><strong>Fig. 5. Visual comparisons on non-reference benchmarks EUVP [36], RUIE [38].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35] and our method.</figcaption>
+                <figcaption><strong>Fig. 7. Visual comparisons on non-reference benchmarks EUVP [36], RUIE [38].</strong> From left to right, the original underwater image, GDCP [32], HFM [14], CWR [33], HCLR [27], UDA [34], NU²Net [35] and our method.</figcaption>
             </div>
         </div>
     </section>
